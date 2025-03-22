@@ -3,12 +3,19 @@ import { useForm } from 'react-hook-form';
 import { days } from '../data/days'
 import { PartBody } from '../data/partbody'
 import Errors from './Errors';
+import { DraftExercice } from '../types';
+import { useExercisesStore } from '../store/store';
 
 export default function ExercicesForm() {
-    const { register, handleSubmit,formState:{errors} } = useForm();
-
-    const registerExercise=()=>{
-
+    // Hook de formulario, debe ser de tipo de dato a enviar en el formulario (DraftExercice)
+    const { register, handleSubmit,formState:{errors},reset } = useForm<DraftExercice>();
+    // Funciones para manejo de formulario
+    const addExercice = useExercisesStore((state) => state.addExercice);
+    // Función para registrar ejercicio
+    const registerExercise=(data:DraftExercice)=>{
+        console.log('Registrando ejercicio',data)
+        addExercice(data)
+        reset()
     }
   return (
     <div className='md:w-1/2 lg:w-2/5 mx-5'>
@@ -76,8 +83,8 @@ export default function ExercicesForm() {
                 {errors.peso && <p className="text-red-500 text-xs mt-1"><Errors>{errors.peso.message?.toString()}</Errors> </p>}
 
             </div>
-            <div className='mb-4 flex'>
-                <div className="flex flex-col mr-4">
+            <div className='mb-4 flex md:1/2flex-row flex-col'>
+                <div className="flex flex-col">
                     <label htmlFor="reps" className='text-sm font-bold'>Repeticiones</label>
                     <select id="reps" className='bg-slate-200 p-2 mt-2'  {...register("reps", { required: "Añade el numero de repeticiones a realizar" })}  
                     >
