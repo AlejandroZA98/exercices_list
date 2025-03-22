@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+
+/* Sobrescribir SwipeableList */
+.swipeable-list {
+  margin-bottom: -500px !important;
+  padding: 0 !important;
+}
+
+/* Sobrescribir SwipeableListItem */
+.swipeable-list-item {
+  padding: 0 !important;
+  margin-bottom: -500px !important;
+}
+
+.swipeable-list-item__leading-actions,
+.swipeable-list-item__trailing-actions {
+  @apply text-white text-lg uppercase font-bold;
+}
+
+/* Acciones de la lista */
+.swipeable-list-item__leading-actions {
+  @apply bg-blue-600;
+}
+
+.swipeable-list-item__trailing-actions {
+  @apply bg-pink-600;
+}
+
+/* Acciones de deslizamiento */
+.swipeable-list .swipe-action {
+  @apply flex justify-center items-center;
+}

@@ -1,5 +1,6 @@
 
 import './App.css'
+import ExerciceList from './components/ExerciceList'
 import ExercicesForm from './components/ExercicesForm'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
      </div>
       <div className='md:flex mt-12'>
           <ExercicesForm />
+          <ExerciceList />
       </div>
     </>
   )
