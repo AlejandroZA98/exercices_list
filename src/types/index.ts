@@ -9,7 +9,7 @@ export type partbody={
 }
 
 export type Exercise={
-    id:number,
+    id:string,
     day:string,
     ejercicio:string,
     partbody:partbody,

@@ -1,22 +1,49 @@
 import { useForm } from 'react-hook-form';
-
 import { days } from '../data/days'
 import { PartBody } from '../data/partbody'
 import Errors from './Errors';
 import { DraftExercice } from '../types';
 import { useExercisesStore } from '../store/store';
+import { useEffect } from 'react';
+import {toast} from 'react-toastify'
 
 export default function ExercicesForm() {
     // Hook de formulario, debe ser de tipo de dato a enviar en el formulario (DraftExercice)
-    const { register, handleSubmit,formState:{errors},reset } = useForm<DraftExercice>();
+    const { register, handleSubmit,formState:{errors},reset,setValue } = useForm<DraftExercice>();
     // Funciones para manejo de formulario
     const addExercice = useExercisesStore((state) => state.addExercice);
+    const update_id= useExercisesStore((state)=> state.update_id)
+    const ExercicesList = useExercisesStore((state) => state.exercises);
+    const updateExercise = useExercisesStore((state) => state.updateExercise)
+
+    //Funcion para settear datos en formulario
+    useEffect(()=>{
+        if(update_id){
+            const ExercicesEdit=ExercicesList.filter(e=>e.id==update_id)
+            setValue('day',ExercicesEdit[0].day)
+            setValue('partbody',ExercicesEdit[0].partbody)
+            setValue('ejercicio',ExercicesEdit[0].ejercicio)
+            setValue('peso',ExercicesEdit[0].peso)
+            setValue('reps',ExercicesEdit[0].reps)
+            setValue('series',ExercicesEdit[0].series)
+        }
+    },[update_id])
+
+
     // Función para registrar ejercicio
     const registerExercise=(data:DraftExercice)=>{
-        console.log('Registrando ejercicio',data)
-        addExercice(data)
+        if(update_id){
+            updateExercise(data)
+            toast.success('Ejercicio editado correctamente')
+
+        }else{
+            addExercice(data)
+            toast.success('Ejercicio creado correctamente')
+
+        }
         reset()
     }
+   
   return (
     <div className='md:w-1/2 lg:w-2/5 mx-5'>
         <h2 className='font-black text-3xl text-center'>Crea tu rutina de la semana</h2>

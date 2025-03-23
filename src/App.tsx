@@ -2,6 +2,8 @@
 import './App.css'
 import ExerciceList from './components/ExerciceList'
 import ExercicesForm from './components/ExercicesForm'
+import 'react-toastify/dist/ReactToastify.css';// libreria toast
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
           <ExercicesForm />
           <ExerciceList />
       </div>
+      <ToastContainer/>
+
     </>
   )
 }
