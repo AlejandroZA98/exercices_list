@@ -10,6 +10,8 @@ type ExercisesState={
     updateId:(id:string)=>void// funciones
     updateExercise:(data:DraftExercice)=>void// funciones
     update_id:string
+    dataFiltering:string
+    Filtering:(data:string)=>void// funciones)
 }
 
 const createExercises = (exercise:DraftExercice) => {
@@ -21,9 +23,11 @@ export const useExercisesStore = create<ExercisesState>()(
     devtools(persist((set)=>({
         exercises:[],
         update_id:'',
+        dataFiltering:'',
+        
         addExercice:(data)=>{
             const newExercice=createExercises(data)// crea un nuevo ejercicio
-            console.log("Desde Store: " , newExercice)
+            //console.log("Desde Store: " , newExercice)
 
             set((state)=>({// lo asigna al state
                 exercises:[...state.exercises,newExercice]
@@ -31,7 +35,7 @@ export const useExercisesStore = create<ExercisesState>()(
             }))
         },
         deleteExercice:(id)=>{
-            console.log("Eliminando", id)
+            //console.log("Eliminando", id)
             set((state)=>({
                 exercises:state.exercises.filter(e=>e.id!==id),
                 update_id: ''
@@ -39,19 +43,26 @@ export const useExercisesStore = create<ExercisesState>()(
             }))
         },
         updateId:(id)=>{
-            console.log("Update:", id)
+            //console.log("Update:", id)
             set(()=>({
                 update_id: id
             }))
         },
         updateExercise:(data)=>{
-            console.log("Actualizando EJ:...",data)
+           // console.log("Actualizando EJ:...",data)
             set((state)=>({
                 // por cada dato busca el ejercicio con el id del state, si existe conserva el id y actualiza data, sino devuelve el exercise
                 exercises:state.exercises.map(exercise=> exercise.id===state.update_id?{id:state.update_id,...data}:exercise),
                 update_id: ''
             }))
+        },
+        Filtering:(data)=>{
+            console.log("Filtrando: ", data)
+            set(()=>({
+                dataFiltering: data
+            }))
         }
+
 
 
     }),
